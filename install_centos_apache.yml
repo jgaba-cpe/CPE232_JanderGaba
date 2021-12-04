@@ -1,0 +1,22 @@
+---
+- hosts: 192.168.56.105
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    yum: 
+      name: httpd
+      state: present
+  - name: httpd status
+    service:
+      name: httpd
+      state: started
+  - name: open HTTP firewall port 80
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+  - name: restart firewalld service
+    service:
+      name: firewalld
+      state: restarted
