@@ -3,20 +3,10 @@
   become: true
   tasks:
 
-  - name: install apache2 package
+  - name: install apache2 and php
     yum:
-      name: httpd
-      state: present
-  - name: httpd status
-    service:
-      name: httpd
-      state: started
-  - name: open HTTP firewall port 80
-    firewalld:
-      service: http
-      permanent: true
-      state: enabled
-  - name: restart firewalld service
-    service:
-      name: firewalld
-      state: restarted
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+      update_cache: yes
